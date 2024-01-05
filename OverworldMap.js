@@ -1,4 +1,6 @@
 import { GameObject } from "./GameObject.js";
+import { Person } from "./Person.js";
+import { utils } from "./utils.js";
 
 export class OverworldMap {
   constructor(config){
@@ -22,15 +24,15 @@ window.OverworldMap = {
     lowerSrc: '/images/maps/DemoLower.png',
     upperSrc: '/images/maps/DemoUpper.png',
     gameObjects:{
-      hero: new GameObject({
+      hero: new Person({
         x: 5,
         y: 6,
       }),
-      npc1: new GameObject({
-        x: 7,
-        y: 8,
-        src: './images/characters/people/npc1.png',
-      }),      
+      // npc1: new GameObject({
+      //   x: 7,
+      //   y: 8,
+      //   src: './images/characters/people/npc1.png',
+      // }),      
     }
   },
   Kitchen:{
@@ -38,12 +40,12 @@ window.OverworldMap = {
     upperSrc: '/images/maps/KitchenUpper.png',
     gameObjects:{
       hero: new GameObject({
-        x: 2,
-        y: 5,
+        x: utils.withGrid(2),
+        y: utils.withGrid(5),
       }),
       npc1: new GameObject({
-        x: 8,
-        y: 5,
+        x: utils.withGrid(8),
+        y: utils.withGrid(5),
         src: './images/characters/people/npc2.png',
       }), 
       npc2: new GameObject({
