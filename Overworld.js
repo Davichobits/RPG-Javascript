@@ -1,5 +1,6 @@
 import { GameObject } from "./GameObject.js";
 import { OverworldMap } from "./OverworldMap.js";
+import { DirectionInput } from "./DirectionInput.js";
 
 export class Overworld {
   constructor(config) {
@@ -28,9 +29,10 @@ export class Overworld {
   }
 
   init(){
-    this.map = new OverworldMap(window.OverworldMap.Kitchen);
+    this.map = new OverworldMap(window.OverworldMap.DemoRoom);
+
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
     this.startGameLoop();
-
-
   }
 }
