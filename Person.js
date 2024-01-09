@@ -3,9 +3,9 @@ import { GameObject } from "./GameObject.js";
 export class Person extends GameObject {
   constructor(config) {
     super(config);
-      this.movingProcessRemaining = 32;
+      this.movingProcessRemaining = 0;
 
-      this.direction = 'right';
+      this.isPlayerControlled = config.isPlayerControlled || false;
 
       this.directionUpdate = {
         'up': ['y', -1],
@@ -17,6 +17,10 @@ export class Person extends GameObject {
 
   update(state){
     this.updatePosition();
+    if(this.isPlayerControlled && this.movingProcessRemaining=== 0 && state.arrow){
+      this.direction = state.arrow;
+      this.movingProcessRemaining = 16;
+    }
   }
 
   updatePosition() {

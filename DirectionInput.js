@@ -13,6 +13,11 @@ export class DirectionInput {
       'KeyD': 'right',
     };
   }
+
+  get direction(){
+    return this.heldDirections[0];
+  }
+
   init(){
     document.addEventListener('keydown', (e)=>{
       const direction = this.map[e.code];
