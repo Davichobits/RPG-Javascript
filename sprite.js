@@ -29,11 +29,27 @@ export class Sprite {
         [3,0]
       ]
     }
-    this.currentAnimation = config.currentAnimation || 'idle-down';
+    this.currentAnimation = 'walk-down' // config.currentAnimation || 'idle-down';
     this.currentAnimationFrame = 0;
+
+    this.animationFrameLimit = config.animationFrameLimit || 16;
+    this.animationFrameProgress = this.animationFrameLimit;
 
     //Reference the game object
     this.gameObject = config.gameObject;
+  }
+
+  get frame(){
+    return this.animations[this.currentAnimation][this.currentAnimationFrame];
+  }
+
+  updateAnimationProgress() {
+    if(this.animationFrameProgress > 0){
+      this.animationFrameProgress--;
+    } else {
+      this.animationFrameProgress = this.animationFrameLimit;
+      this.currentAnimationFrame = (this.currentAnimationFrame + 1) % this.animations[this.currentAnimation].length;
+    }
   }
 
   draw(ctx){
@@ -42,18 +58,18 @@ export class Sprite {
 
     this.isShadowLoaded && ctx.drawImage(
       this.shadow,
-      0,0,
-      32, 32,
-      x, y,
-      32, 32
+      x,y,
     )
+
+    const [frameX, frameY] = this.frame;
 
     this.loaded && ctx.drawImage(
       this.image,
-      0,0,
+      frameX, frameY,
       32, 32,
       x, y,
       32, 32
     )
   }
+  updateAnimationProgress; // Remove the parentheses from the function call.
 }
