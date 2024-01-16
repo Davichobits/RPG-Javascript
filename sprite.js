@@ -19,20 +19,19 @@ export class Sprite {
 
     // Configure Animation & Initial State
     this.animations = config.animations || {
-      "idle-down": [ [0,0] ],
-      "walk-down": [ [1,0], [0,0], [3,0], [0,0] ],
-      
-      walkDown:[
-        [0,0],
-        [1,0],
-        [2,0],
-        [3,0]
-      ]
+      "idle-down"  : [ [0,0] ],
+      "idle-right" : [ [0,1] ],
+      "idle-up"    : [ [0,2] ],
+      "idle-left"  : [ [0,3] ],
+      "walk-down"  : [ [1,0], [0,0], [3,0], [0,0] ],
+      "walk-right" : [ [1,1], [0,1], [3,1], [0,1] ],
+      "walk-up"    : [ [1,2], [0,2], [3,2], [0,2] ],
+      "walk-left"  : [ [1,3], [0,3], [3,3], [0,3] ],
     }
     this.currentAnimation = 'walk-down' // config.currentAnimation || 'idle-down';
     this.currentAnimationFrame = 0;
 
-    this.animationFrameLimit = config.animationFrameLimit || 16;
+    this.animationFrameLimit = config.animationFrameLimit || 8;
     this.animationFrameProgress = this.animationFrameLimit;
 
     //Reference the game object
@@ -43,18 +42,32 @@ export class Sprite {
     return this.animations[this.currentAnimation][this.currentAnimationFrame];
   }
 
-  updateAnimationProgress() {
-    if(this.animationFrameProgress > 0){
-      this.animationFrameProgress--;
-    } else {
+  setAnimation(key){
+    if(this.currentAnimation !== key){
+      this.currentAnimation = key;
+      this.currentAnimationFrame = 0;
       this.animationFrameProgress = this.animationFrameLimit;
-      this.currentAnimationFrame = (this.currentAnimationFrame + 1) % this.animations[this.currentAnimation].length;
     }
   }
 
+  updateAnimationProgress() {
+    if(this.animationFrameProgress > 0){
+      this.animationFrameProgress--;
+      return;
+    } 
+
+    this.animationFrameProgress = this.animationFrameLimit;
+    this.currentAnimationFrame++;
+
+    if(this.frame === undefined){
+      this.currentAnimationFrame = 0;
+    }
+    
+  }
+
   draw(ctx){
-    const x = this.gameObject.x - 0;
-    const y = this.gameObject.y - 12;
+    const x = this.gameObject.x - 8;
+    const y = this.gameObject.y - 18;
 
     this.isShadowLoaded && ctx.drawImage(
       this.shadow,
@@ -65,11 +78,11 @@ export class Sprite {
 
     this.loaded && ctx.drawImage(
       this.image,
-      frameX, frameY,
+      frameX *32, frameY * 32,
       32, 32,
       x, y,
       32, 32
     )
+    this.updateAnimationProgress(); 
   }
-  updateAnimationProgress; // Remove the parentheses from the function call.
 }

@@ -29,11 +29,11 @@ window.OverworldMap = {
         y: utils.withGrid(6),
         isPlayerControlled: true,
       }),
-      // npc1: new Person({
-      //   x: utils.withGrid(15),
-      //   y: utils.withGrid(3),
-      //   src: './images/characters/people/npc1.png',
-      // }),      
+      npc1: new Person({
+        x: utils.withGrid(9),
+        y: utils.withGrid(7),
+        src: './images/characters/people/npc1.png',
+      }),      
     }
   },
   Kitchen:{
